@@ -27,7 +27,7 @@
         <!-- Karton dikte keuze -->
         <label for="kartonDikte">Karton dikte:</label>
         <select id="kartonDikte" name="kartonDikte" required>
-        <option value="3">3 mm</option>
+            <option value="3">3 mm</option>
             <option value="8">8 mm</option>
             <option value="12">12 mm</option>
             <option value="20">20 mm</option>
@@ -63,7 +63,7 @@
 
     <h2>Bestellingen:</h2>
     <ul id="orderList">
-        <!-- Hier worden de bestellingen weergegeven -->
+    <!-- Hier worden de bestellingen weergegeven -->
     </ul>
 
     <script>
@@ -79,7 +79,7 @@
                 console.log("Formulier ingediend"); // DEBUG LOG
 
                 // Haal de waarden op uit de velden
-                let orderNummer = `A${currentOrderNumber}`;
+                let orderNummer = A${currentOrderNumber};
                 let productType = document.getElementById("productType").value;
                 let kartonDikte = document.getElementById("kartonDikte").value;
                 let aantalDozen = document.getElementById("aantalDozen").value;
@@ -112,7 +112,7 @@
                 // Voeg het ordernummer toe aan de lijst van bestellingen
                 let orderList = document.getElementById("orderList");
                 let listItem = document.createElement("li");
-                listItem.textContent = `Ordernummer:{orderNummer} | Type: productType | Kartondikte:{kartonDikte} mm | Aantal: aantalDozen | Afmetingen:{lengte}xbreedtex{hoogte} cm | Leverdatum: order.leveringDate`;
+listItem.textContent = Ordernummer:{orderNummer} | Type: productType | Kartondikte:{kartonDikte} mm | Aantal: aantalDozen | Afmetingen:{lengte}xbreedtex{hoogte} cm | Leverdatum: order.leveringDate;
                 
                 // Check of de bestelling daadwerkelijk aan de lijst wordt toegevoegd
                 console.log("Bestelling wordt toegevoegd aan de lijst");
@@ -123,7 +123,7 @@
 
                 // Reset het formulier
                 document.getElementById("orderForm").reset();
-                document.getElementById("orderNummer").value = `A{currentOrderNumber}`; // Update het ordernummer
+                document.getElementById("orderNummer").value = A{currentOrderNumber}; // Update het ordernummer
             });
         });
     </script>
