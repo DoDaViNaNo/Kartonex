@@ -19,7 +19,7 @@
         <!-- Keuze voor Doos of Wikkel -->
         <label for="productType">Type product:</label>
         <select id="productType" name="productType" required>
-            <option value="doos">Doos</option>
+    <option value="doos">Doos</option>
             <option value="wikkel">Wikkel</option>
         </select>
         <br><br>
@@ -43,6 +43,7 @@
         <label for="lengte">Lengte (in cm):</label>
         <input type="number" id="lengte" name="lengte" min="1" required>
         <br><br>
+        
         <label for="breedte">Breedte (in cm):</label>
         <input type="number" id="breedte" name="breedte" min="1" required>
         <br><br>
@@ -77,7 +78,7 @@
 
                 // Haal de waarden op uit de velden
                 let orderNummer = `A${currentOrderNumber}`;
-        let productType = document.getElementById("productType").value;
+                let productType = document.getElementById("productType").value;
                 let kartonDikte = document.getElementById("kartonDikte").value;
                 let aantalDozen = document.getElementById("aantalDozen").value;
                 let lengte = document.getElementById("lengte").value;
@@ -90,17 +91,18 @@
                 leveringDate.setDate(leveringDate.getDate() + parseInt(aantalDagen));
 
                 // Maak een nieuw order object aan
-                let order = {
+                let order = 
                     orderNummer: orderNummer,
                     productType: productType,
                     kartonDikte: kartonDikte,
                     aantalDozen: aantalDozen,
-                    afmetingen: {
+                    afmetingen: 
                         lengte: lengte,
                         breedte: breedte,
                         hoogte: hoogte
-                    },
+                    ,
                     leveringDate: leveringDate.toLocaleDateString('nl-NL') // Leverdatum in Nederlands formaat
+                ;
 
                 // Voeg het ordernummer toe aan de lijst van bestellingen
                 let orderList = document.getElementById("orderList");
@@ -119,4 +121,4 @@
     </script>
 </body>
 </html>
-...
+```
