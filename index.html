@@ -8,8 +8,7 @@
 </head>
 <body>
     <h1>Bestelformulier</h1>
-
-    <!-- Formulier voor het plaatsen van de bestelling -->
+<!-- Formulier voor het plaatsen van de bestelling -->
     <form id="orderForm">
         <!-- Ordernummer wordt automatisch toegewezen -->
         <label for="orderNummer">Ordernummer:</label>
@@ -19,7 +18,7 @@
         <!-- Keuze voor Doos of Wikkel -->
         <label for="productType">Type product:</label>
         <select id="productType" name="productType" required>
-    <option value="doos">Doos</option>
+            <option value="doos">Doos</option>
             <option value="wikkel">Wikkel</option>
         </select>
         <br><br>
@@ -41,7 +40,7 @@
 
         <!-- Afmetingen van de doos of wikkel -->
         <label for="lengte">Lengte (in cm):</label>
-        <input type="number" id="lengte" name="lengte" min="1" required>
+    <input type="number" id="lengte" name="lengte" min="1" required>
         <br><br>
         
         <label for="breedte">Breedte (in cm):</label>
@@ -75,9 +74,10 @@
             // Voeg een submit event listener toe aan het formulier
             document.getElementById("orderForm").addEventListener("submit", function(event) {
                 event.preventDefault(); // Voorkomt dat het formulier opnieuw laadt
+console.log("Formulier ingediend"); // DEBUG LOG
 
                 // Haal de waarden op uit de velden
-                let orderNummer = `A${currentOrderNumber}`;
+                let orderNummer = A${currentOrderNumber};
                 let productType = document.getElementById("productType").value;
                 let kartonDikte = document.getElementById("kartonDikte").value;
                 let aantalDozen = document.getElementById("aantalDozen").value;
@@ -86,11 +86,21 @@
                 let hoogte = document.getElementById("hoogte").value;
                 let aantalDagen = document.getElementById("aantalDagen").value;
 
+                console.log("Waarden uit formulier:", {
+                    orderNummer, 
+                    productType, 
+                    kartonDikte, 
+                    aantalDozen, 
+                    lengte, 
+                    breedte, 
+                    hoogte, 
+                    aantalDagen
+                }); // DEBUG LOG
+
                 // Berekent de leverdatum op basis van aantal dagen
                 let leveringDate = new Date();
                 leveringDate.setDate(leveringDate.getDate() + parseInt(aantalDagen));
-
-                // Maak een nieuw order object aan
+// Maak een nieuw order object aan
                 let order = 
                     orderNummer: orderNummer,
                     productType: productType,
@@ -104,18 +114,22 @@
                     leveringDate: leveringDate.toLocaleDateString('nl-NL') // Leverdatum in Nederlands formaat
                 ;
 
+                console.log("Nieuw order:", order); // DEBUG LOG
+
                 // Voeg het ordernummer toe aan de lijst van bestellingen
                 let orderList = document.getElementById("orderList");
                 let listItem = document.createElement("li");
-                listItem.textContent = `Ordernummer:{orderNummer} | Type: productType | Kartondikte:{kartonDikte} mm | Aantal: aantalDozen | Afmetingen:{lengte}xbreedtex{hoogte} cm | Leverdatum: order.leveringDate`;
+                listItem.textContent = Ordernummer:{orderNummer} | Type: productType | Kartondikte:{kartonDikte} mm | Aantal: aantalDozen | Afmetingen:{lengte}xbreedtex{hoogte} cm | Leverdatum: ${order.leveringDate};
+                
+                // Check of de bestelling daadwerkelijk aan de lijst wordt toegevoegd
+                console.log("Bestelling wordt toegevoegd aan de lijst");
                 orderList.appendChild(listItem);
-
-                // Verhoog het ordernummer voor de volgende bestelling
+// Verhoog het ordernummer voor de volgende bestelling
                 currentOrderNumber++;
 
                 // Reset het formulier
                 document.getElementById("orderForm").reset();
-                document.getElementById("orderNummer").value = `A{currentOrderNumber}`; // Update het ordernummer
+                document.getElementById("orderNummer").value = A{currentOrderNumber}; // Update het ordernummer
             });
         });
     </script>
