@@ -1,160 +1,52 @@
-html
+```html
 <!DOCTYPE html>
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bestelling Formulier</title>
-    <style>
-        /* Basisstijl voor de pagina */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        h1 {
-            color: #333;
-        }
-        form {
-            margin-bottom: 30px;
-        }
-        label {
-            margin-top: 10px;
-            display: block;
-        }
-        input, select {
-            padding: 8px;
-            width: 250px;
-            margin-top: 5px;
-        }
-        button {
-            margin-top: 20px;
-            padding: 10px 15px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        table {
-            margin-top: 20px;
-            width: 100%;
-            border-collapse: collapse;
-        }
-        table, th, td {
-            border: 1px solid #ddd:
-}
-        th, td {
-            padding: 10px;
-            text-align: left;
-        }
-    </style>
+    <title>Bestelformulier</title>
 </head>
 <body>
-
-    <!-- Titel van de pagina -->
-    <h1>Bestelling Formulier</h1>
-
-    <!-- Formulier voor de klant om gegevens in te vullen -->
+    <h1>Bestelformulier</h1>
+    
+    <!-- Formulier voor het plaatsen van de bestelling -->
     <form id="orderForm">
-        <!-- Selectie van de soort doos (Doos of Wikkel) -->
-        <label for="orderType">Soort doos (Doos of Wikkel):</label>
-        <select id="orderType" required>
-            <option value="Doos">Doos</option>
-            <option value="Wikkel">Wikkel</option>
-        </select>
+        <!-- Aantal dagen tot levering -->
+        <label for="aantalDagen">Aantal dagen tot levering:</label>
+        <input type="number" id="aantalDagen" name="aantalDagen" min="1" required>
+        <br><br>
 
-        <!-- Selectie van kartondikte -->
-        <label for="cartonThickness">Kartondikte:</label>
-        <select id="cartonThickness" required>
-            <option value="3 mm">3 mm</option>
-            <option value="8 mm">8 mm</option>
-            <option value="12 mm">12 mm</option>
-            <option value="20 mm">20 mm</option>
-        </select>
+        <!-- Leverdatum (klant vult zelf in) -->
+        <label for="leverdatum">Leverdatum:</label>
+        <input type="date" id="leverdatum" name="leverdatum" required>
+        <br><br>
 
-        <!-- Invoer voor het aantal dozen dat besteld wordt -->
-        <label for="orderQuantity">Aantal dozen:</label>
-        <input type="number" id="orderQuantity" min="1" required>
-
-        <!-- Invoer voor de lengte van de doos of wikkel -->
-        <label for="length">Lengte (cm):</label>
-        <input type="number" id="length" min="1" required>
-<!-- Invoer voor de breedte van de doos of wikkel -->
-        <label for="width">Breedte (cm):</label>
-        <input type="number" id="width" min="1" required>
-
-        <!-- Invoer voor de hoogte van de doos of wikkel -->
-        <label for="height">Hoogte (cm):</label>
-        <input type="number" id="height" min="1" required>
-
-        <!-- Invoer voor de leverdatum -->
-        <label for="leverdatum">Aantal dagen tot levering:</label>
-<input type="number" id="leverdatum" name="leverdatum" min="1" required>
-
-        <!-- Submit-knop om de bestelling te plaatsen -->
-        <button type="submit">Bestelling Plaatsen</button>
+        <!-- Knop om de bestelling te plaatsen -->
+        <button type="submit">Bestelling plaatsen</button>
     </form>
 
-    <!-- Tabel om bestellingen weer te geven -->
-    <h2>Bestellingen</h2>
-    <table id="ordersTable">
-        <thead>
-            <tr>
-                <th>Ordernummer</th>
-                <th>Soort Doos</th>
-                <th>Kartondikte</th>
-                <th>Aantal Dozen</th>
-                <th>Afmetingen (L x B x H)</th>
-                <th>Leverdatum</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Hier worden bestellingen toegevoegd via JavaScript -->
-        </tbody>
-    </table>
+    <!-- Plaats de script-tag onderaan de pagina -->
+<script>
+        // Wacht totdat de DOM volledig geladen is
+        document.addEventListener("DOMContentLoaded", function() {
+            // Voeg een submit event listener toe aan het formulier
+            document.getElementById("orderForm").addEventListener("submit", function(event) {
+                event.preventDefault(); // Voorkomt dat het formulier opnieuw laadt
 
-    <script>
-        /* Variabele om de ordernummers bij te houden, begint bij A1 */
-        let orderCounter = 1;
-/* Verkrijg de tabel waarin bestellingen getoond worden */
-        const ordersTable = document.getElementById("ordersTable").getElementsByTagName("tbody")[0];
+                // Haal de waarden op uit de velden
+                let aantalDagen = document.getElementById("aantalDagen").value;
+                let leverdatum = document.getElementById("leverdatum").value;
 
-        /* Verkrijg het formulier om gegevens van de klant in te voeren */
-        const orderForm = document.getElementById("orderForm");
-
-        /* Event listener die wordt geactiveerd wanneer het formulier wordt ingediend */
-        orderForm.addEventListener("submit", function(event) {
-            event.preventDefault();  // Voorkom dat de pagina opnieuw laadt
-
-            /* Verkrijg de waarden die de klant heeft ingevoerd in het formulier */
-            const orderType = document.getElementById("orderType").value;
-            const cartonThickness = document.getElementById("cartonThickness").value;
-            const orderQuantity = document.getElementById("orderQuantity").value;
-            const length = document.getElementById("length").value;
-            const width = document.getElementById("width").value;
-            const height = document.getElementById("height").value;
-            const deliveryDate = document.getElementById("deliveryDate").value;
-
-            /* Genereer een uniek ordernummer, beginnend bij A1 */
-            const orderNumber = 'A' + orderCounter++;
-/* Maak een nieuwe rij in de tabel voor de bestelling */
-            const newRow = ordersTable.insertRow();
-            newRow.innerHTML = `
-                <td>orderNumber</td>  <!– Toon het ordernummer –>
-                <td>{orderType}</td>    <!-- Toon het soort doos (Doos of Wikkel) -->
-                <td>cartonThickness</td>  <!– Toon de kartondikte –>
-                <td>{orderQuantity}</td>    <!-- Toon het aantal dozen -->
-                <td>length x{width} x height</td>   <!– Toon de afmetingen van de doos –>
-                <td>{deliveryDate}</td>  <!-- Toon de leverdatum -->
-            `;
-
-            /* Reset het formulier zodat de klant een nieuwe bestelling kan invoeren */
-            orderForm.reset();
+                // Controleer of beide velden zijn ingevuld
+                if (aantalDagen && leverdatum) {
+                    // Toon een bevestiging van de bestelling
+                    alert("Bestelling geplaatst!\nAantal dagen tot levering: " + aantalDagen + "\nLeverdatum: " + leverdatum);
+                } else {
+                    alert("Vul alstublieft alle velden in.");
+                }
+            });
         });
     </script>
-
 </body>
 </html>
 ```
