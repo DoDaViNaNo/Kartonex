@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -20,13 +19,13 @@
         <label for="productType">Type product:</label>
         <select id="productType" name="productType" required>
             <option value="doos">Doos</option>
-            <option value="wikkel">Wikkel</option>
+        <option value="wikkel">Wikkel</option>
         </select>
         <br><br>
 
         <!-- Karton dikte keuze -->
         <label for="kartonDikte">Karton dikte:</label>
-    <select id="kartonDikte" name="kartonDikte" required>
+        <select id="kartonDikte" name="kartonDikte" required>
             <option value="3">3 mm</option>
             <option value="8">8 mm</option>
             <option value="12">12 mm</option>
@@ -60,6 +59,7 @@
         <!-- Bestelling plaatsen -->
         <button type="submit">Bestelling plaatsen</button>
     </form>
+
     <h2>Bestellingen:</h2>
     <ul id="orderList">
         <!-- Hier worden de bestellingen weergegeven -->
@@ -86,7 +86,8 @@
                 let aantalDagen = document.getElementById("aantalDagen").value;
 
                 // Maak een nieuw order object aan
-                let order = {orderNummer: orderNummer,
+                let order = 
+                    orderNummer: orderNummer,
                     productType: productType,
                     kartonDikte: kartonDikte,
                     aantalDozen: aantalDozen,
@@ -101,17 +102,17 @@
                 // Voeg het ordernummer toe aan de lijst van bestellingen
                 let orderList = document.getElementById("orderList");
                 let listItem = document.createElement("li");
-                listItem.textContent = Ordernummer:{orderNummer} | Type: productType | Kartondikte:{kartonDikte} mm | Aantal: aantalDozen | Afmetingen:{lengte}xbreedtex{hoogte} cm | Levering in: order.leveringDate dagen;
+                listItem.textContent = Ordernummer:{orderNummer} | Type: productType | Kartondikte:{kartonDikte} mm | Aantal: aantalDozen | Afmetingen:{lengte}xbreedtex{hoogte} cm | Levering in: ${order.leveringDate} dagen;
                 
                 orderList.appendChild(listItem);
 
                 // Verhoog het ordernummer voor de volgende bestelling
-                currentOrderNumber++;
+currentOrderNumber++;
 
                 // Reset het formulier
                 document.getElementById("orderForm").reset();
                 document.getElementById("orderNummer").value = A{currentOrderNumber}; // Update het ordernummer
-});
+            });
         });
     </script>
 </body>
