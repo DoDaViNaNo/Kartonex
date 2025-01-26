@@ -26,7 +26,7 @@
 
         <!-- Karton dikte keuze -->
         <label for="kartonDikte">Karton dikte:</label>
-        <select id="kartonDikte" name="kartonDikte" required>
+    <select id="kartonDikte" name="kartonDikte" required>
             <option value="3">3 mm</option>
             <option value="8">8 mm</option>
             <option value="12">12 mm</option>
@@ -60,10 +60,9 @@
         <!-- Bestelling plaatsen -->
         <button type="submit">Bestelling plaatsen</button>
     </form>
-
     <h2>Bestellingen:</h2>
     <ul id="orderList">
-    <!-- Hier worden de bestellingen weergegeven -->
+        <!-- Hier worden de bestellingen weergegeven -->
     </ul>
 
     <script>
@@ -76,8 +75,6 @@
             document.getElementById("orderForm").addEventListener("submit", function(event) {
                 event.preventDefault(); // Voorkomt dat het formulier opnieuw laadt
 
-                console.log("Formulier ingediend"); // DEBUG LOG
-
                 // Haal de waarden op uit de velden
                 let orderNummer = A${currentOrderNumber};
                 let productType = document.getElementById("productType").value;
@@ -87,15 +84,9 @@
                 let breedte = document.getElementById("breedte").value;
                 let hoogte = document.getElementById("hoogte").value;
                 let aantalDagen = document.getElementById("aantalDagen").value;
-                console.log("Waarden uit formulier:", orderNummer, productType, kartonDikte, aantalDozen, lengte, breedte, hoogte, aantalDagen); // DEBUG LOG
-
-                // Berekent de leverdatum op basis van aantal dagen
-                let leveringDate = new Date();
-                leveringDate.setDate(leveringDate.getDate() + parseInt(aantalDagen));
 
                 // Maak een nieuw order object aan
-                let order = 
-                    orderNummer: orderNummer,
+                let order = {orderNummer: orderNummer,
                     productType: productType,
                     kartonDikte: kartonDikte,
                     aantalDozen: aantalDozen,
@@ -104,18 +95,14 @@
                         breedte: breedte,
                         hoogte: hoogte
                     ,
-                    leveringDate: leveringDate.toLocaleDateString('nl-NL') // Leverdatum in Nederlands formaat
+                    leveringDate: aantalDagen // Het aantal dagen tot levering wordt opgeslagen
                 ;
-
-                console.log("Nieuw order:", order); // DEBUG LOG
 
                 // Voeg het ordernummer toe aan de lijst van bestellingen
                 let orderList = document.getElementById("orderList");
                 let listItem = document.createElement("li");
-listItem.textContent = Ordernummer:{orderNummer} | Type: productType | Kartondikte:{kartonDikte} mm | Aantal: aantalDozen | Afmetingen:{lengte}xbreedtex{hoogte} cm | Leverdatum: order.leveringDate;
+                listItem.textContent = Ordernummer:{orderNummer} | Type: productType | Kartondikte:{kartonDikte} mm | Aantal: aantalDozen | Afmetingen:{lengte}xbreedtex{hoogte} cm | Levering in: order.leveringDate dagen;
                 
-                // Check of de bestelling daadwerkelijk aan de lijst wordt toegevoegd
-                console.log("Bestelling wordt toegevoegd aan de lijst");
                 orderList.appendChild(listItem);
 
                 // Verhoog het ordernummer voor de volgende bestelling
@@ -124,7 +111,7 @@ listItem.textContent = Ordernummer:{orderNummer} | Type: productType | Kartondik
                 // Reset het formulier
                 document.getElementById("orderForm").reset();
                 document.getElementById("orderNummer").value = A{currentOrderNumber}; // Update het ordernummer
-            });
+});
         });
     </script>
 </body>
