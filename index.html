@@ -19,7 +19,7 @@
         <label for="productType">Type product:</label>
         <select id="productType" name="productType" required>
             <option value="doos">Doos</option>
-        <option value="wikkel">Wikkel</option>
+            <option value="wikkel">Wikkel</option>
         </select>
         <br><br>
 
@@ -28,7 +28,7 @@
         <select id="kartonDikte" name="kartonDikte" required>
             <option value="3">3 mm</option>
             <option value="8">8 mm</option>
-            <option value="12">12 mm</option>
+        <option value="12">12 mm</option>
             <option value="20">20 mm</option>
         </select>
         <br><br>
@@ -66,7 +66,7 @@
     </ul>
 
     <script>
-        // Start met ordernummer A1
+    // Start met ordernummer A1
         let currentOrderNumber = 1;
 
         // Wacht totdat de DOM volledig geladen is
@@ -86,28 +86,27 @@
                 let aantalDagen = document.getElementById("aantalDagen").value;
 
                 // Maak een nieuw order object aan
-                let order = 
+                let order = {
                     orderNummer: orderNummer,
                     productType: productType,
-                    kartonDikte: kartonDikte,
-                    aantalDozen: aantalDozen,
+            aantalDozen: aantalDozen,
                     afmetingen: 
                         lengte: lengte,
                         breedte: breedte,
                         hoogte: hoogte
-            } ,
+                    ,
                     leveringDate: aantalDagen // Het aantal dagen tot levering wordt opgeslagen
-        } ;
+                ;
 
                 // Voeg het ordernummer toe aan de lijst van bestellingen
                 let orderList = document.getElementById("orderList");
                 let listItem = document.createElement("li");
-                listItem.textContent = Ordernummer:{orderNummer} | Type: productType | Kartondikte:{kartonDikte} mm | Aantal: aantalDozen | Afmetingen:{lengte}xbreedtex{hoogte} cm | Levering in: ${order.leveringDate} dagen;
-                
+                listItem.textContent = Ordernummer:{orderNummer} | Type: productType | Kartondikte:{kartonDikte} mm | Aantal: aantalDozen | Afmetingen:{lengte}xbreedtex{hoogte} cm | Levering in: order.leveringDate dagen;
+
                 orderList.appendChild(listItem);
 
                 // Verhoog het ordernummer voor de volgende bestelling
-currentOrderNumber++;
+                currentOrderNumber++;
 
                 // Reset het formulier
                 document.getElementById("orderForm").reset();
