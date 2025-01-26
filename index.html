@@ -66,57 +66,52 @@
     </ul>
 
     <script>
-    // Start met ordernummer A1
-        let currentOrderNumber = 1;
+     // Start met ordernummer A1
+    let currentOrderNumber = 1;
 
-        // Wacht totdat de DOM volledig geladen is
-        document.addEventListener("DOMContentLoaded", function() {
-            // Voeg een submit event listener toe aan het formulier
-      document.addEventListener("DOMContentLoaded", function() {
-    // Voeg een submit event listener toe aan het formulier
-    document.getElementById("orderForm").addEventListener("submit", function(event) {
-        event.preventDefault(); // Voorkomt dat het formulier opnieuw laadt
+    // Zorg ervoor dat de code pas wordt uitgevoerd wanneer de DOM volledig is geladen
+    document.addEventListener("DOMContentLoaded", function() {
+        // Voeg een event listener toe voor het submitten van het formulier
+        document.getElementById("orderForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Voorkomt dat het formulier opnieuw laadt
 
-        // Haal de waarden op uit de velden
-        let orderNummer = A${currentOrderNumber};
-        let productType = document.getElementById("productType").value;
-        let kartonDikte = document.getElementById("kartonDikte").value;
-        let aantalDozen = document.getElementById("aantalDozen").value;
-        let lengte = document.getElementById("lengte").value;
-        let breedte = document.getElementById("breedte").value;
-        let hoogte = document.getElementById("hoogte").value;
-        let aantalDagen = document.getElementById("aantalDagen").value;
+            // Haal de waarden op uit de velden
+            let orderNummer = A${currentOrderNumber};
+            let productType = document.getElementById("productType").value;
+            let kartonDikte = document.getElementById("kartonDikte").value;
+            let aantalDozen = document.getElementById("aantalDozen").value;
+            let lengte = document.getElementById("lengte").value;
+            let breedte = document.getElementById("breedte").value;
+            let hoogte = document.getElementById("hoogte").value;
+            let aantalDagen = document.getElementById("aantalDagen").value;
 
-        // Maak een nieuw order object aan
-        let order = 
-            orderNummer: orderNummer,
-            productType: productType,
-            kartonDikte: kartonDikte,
-            aantalDozen: aantalDozen,
-            afmetingen: 
-                lengte: lengte,
-                breedte: breedte,
-                hoogte: hoogte
-            ,
-            leveringDate: aantalDagen // Het aantal dagen tot levering wordt opgeslagen
-        ;
+            // Maak een nieuw order object aan
+            let order = {
+                orderNummer: orderNummer,
+                productType: productType,
+                kartonDikte: kartonDikte,
+                aantalDozen: aantalDozen,
+                afmetingen: {
+                    lengte: lengte,
+                    breedte: breedte,
+                    hoogte: hoogte
+                },
+                leveringDate: aantalDagen // Het aantal dagen tot levering wordt opgeslagen
+            };
+            // Voeg het ordernummer toe aan de lijst van bestellingen
+            let orderList = document.getElementById("orderList");
+            let listItem = document.createElement("li");
+            listItem.textContent = Ordernummer:{orderNummer} | Type: productType | Kartondikte:{kartonDikte} mm | Aantal: aantalDozen | Afmetingen:{lengte}xbreedtex{hoogte} cm | Levering in: order.leveringDate dagen;
 
-        // Voeg het ordernummer toe aan de lijst van bestellingen
-        let orderList = document.getElementById("orderList");
-        let listItem = document.createElement("li");
-        listItem.textContent = Ordernummer:{orderNummer} | Type: productType | Kartondikte:{kartonDikte} mm | Aantal: aantalDozen | Afmetingen:{lengte}xbreedtex{hoogte} cm | Levering in: order.leveringDate dagen;
+            orderList.appendChild(listItem);
 
-        orderList.appendChild(listItem);
+            // Verhoog het ordernummer voor de volgende bestelling
+            currentOrderNumber++;
 
-        // Verhoog het ordernummer voor de volgende bestelling
-        currentOrderNumber++;
-
-        // Reset het formulier
-        document.getElementById("orderForm").reset();
-document.getElementById("orderNummer").value = A{currentOrderNumber}; // Update het ordernummer
-    });
-}); // Dit sluit de 'DOMContentLoaded' event listener af
+            // Reset het formulier
+            document.getElementById("orderForm").reset();
+            document.getElementById("orderNummer").value = A{currentOrderNumber}; // Update het ordernummer
+        }); // Dit sluit de submit event listener af
+    }); // Dit sluit de DOMContentLoaded event listener af
+</script>
 ```
-    </script>
-</body>
-</html>
