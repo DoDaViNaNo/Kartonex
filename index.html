@@ -8,25 +8,67 @@
 </head>
 <body>
     <h1>Bestelformulier</h1>
-    
+
     <!-- Formulier voor het plaatsen van de bestelling -->
     <form id="orderForm">
+        <!-- Ordernummer wordt automatisch toegewezen -->
+        <label for="orderNummer">Ordernummer:</label>
+        <input type="text" id="orderNummer" name="orderNummer" value="A1" readonly>
+        <br><br>
+
+        <!-- Keuze voor Doos of Wikkel -->
+        <label for="productType">Type product:</label>
+        <select id="productType" name="productType" required>
+            <option value="doos">Doos</option>
+            <option value="wikkel">Wikkel</option>
+        </select>
+        <br><br>
+
+        <!-- Karton dikte keuze -->
+        <label for="kartonDikte">Karton dikte:</label>
+        <select id="kartonDikte" name="kartonDikte" required>
+            <option value="3">3 mm</option>
+            <option value="8">8 mm</option>
+            <option value="12">12 mm</option>
+            <option value="20">20 mm</option>
+        </select>
+        <br><br>
+
+        <!-- Aantal dozen -->
+        <label for="aantalDozen">Aantal dozen/wikkels:</label>
+        <input type="number" id="aantalDozen" name="aantalDozen" min="1" required>
+        <br><br>
+
+        <!-- Afmetingen van de doos of wikkel -->
+        <label for="lengte">Lengte (in cm):</label>
+        <input type="number" id="lengte" name="lengte" min="1" required>
+        <br><br>
+        <label for="breedte">Breedte (in cm):</label>
+        <input type="number" id="breedte" name="breedte" min="1" required>
+        <br><br>
+        
+        <label for="hoogte">Hoogte (in cm):</label>
+        <input type="number" id="hoogte" name="hoogte" min="1" required>
+        <br><br>
+
         <!-- Aantal dagen tot levering -->
         <label for="aantalDagen">Aantal dagen tot levering:</label>
         <input type="number" id="aantalDagen" name="aantalDagen" min="1" required>
         <br><br>
 
-        <!-- Leverdatum (klant vult zelf in) -->
-        <label for="leverdatum">Leverdatum:</label>
-        <input type="date" id="leverdatum" name="leverdatum" required>
-        <br><br>
-
-        <!-- Knop om de bestelling te plaatsen -->
+        <!-- Bestelling plaatsen -->
         <button type="submit">Bestelling plaatsen</button>
     </form>
 
-    <!-- Plaats de script-tag onderaan de pagina -->
-<script>
+    <h2>Bestellingen:</h2>
+    <ul id="orderList">
+        <!-- Hier worden de bestellingen weergegeven -->
+    </ul>
+
+    <script>
+        // Start met ordernummer A1
+        let currentOrderNumber = 1;
+
         // Wacht totdat de DOM volledig geladen is
         document.addEventListener("DOMContentLoaded", function() {
             // Voeg een submit event listener toe aan het formulier
@@ -34,19 +76,47 @@
                 event.preventDefault(); // Voorkomt dat het formulier opnieuw laadt
 
                 // Haal de waarden op uit de velden
+                let orderNummer = `A${currentOrderNumber}`;
+        let productType = document.getElementById("productType").value;
+                let kartonDikte = document.getElementById("kartonDikte").value;
+                let aantalDozen = document.getElementById("aantalDozen").value;
+                let lengte = document.getElementById("lengte").value;
+                let breedte = document.getElementById("breedte").value;
+                let hoogte = document.getElementById("hoogte").value;
                 let aantalDagen = document.getElementById("aantalDagen").value;
-                let leverdatum = document.getElementById("leverdatum").value;
 
-                // Controleer of beide velden zijn ingevuld
-                if (aantalDagen && leverdatum) {
-                    // Toon een bevestiging van de bestelling
-                    alert("Bestelling geplaatst!\nAantal dagen tot levering: " + aantalDagen + "\nLeverdatum: " + leverdatum);
-                } else {
-                    alert("Vul alstublieft alle velden in.");
-                }
+                // Berekent de leverdatum op basis van aantal dagen
+                let leveringDate = new Date();
+                leveringDate.setDate(leveringDate.getDate() + parseInt(aantalDagen));
+
+                // Maak een nieuw order object aan
+                let order = {
+                    orderNummer: orderNummer,
+                    productType: productType,
+                    kartonDikte: kartonDikte,
+                    aantalDozen: aantalDozen,
+                    afmetingen: {
+                        lengte: lengte,
+                        breedte: breedte,
+                        hoogte: hoogte
+                    },
+                    leveringDate: leveringDate.toLocaleDateString('nl-NL') // Leverdatum in Nederlands formaat
+
+                // Voeg het ordernummer toe aan de lijst van bestellingen
+                let orderList = document.getElementById("orderList");
+                let listItem = document.createElement("li");
+                listItem.textContent = `Ordernummer:{orderNummer} | Type: productType | Kartondikte:{kartonDikte} mm | Aantal: aantalDozen | Afmetingen:{lengte}xbreedtex{hoogte} cm | Leverdatum: order.leveringDate`;
+                orderList.appendChild(listItem);
+
+                // Verhoog het ordernummer voor de volgende bestelling
+                currentOrderNumber++;
+
+                // Reset het formulier
+                document.getElementById("orderForm").reset();
+                document.getElementById("orderNummer").value = `A{currentOrderNumber}`; // Update het ordernummer
             });
         });
     </script>
 </body>
 </html>
-```
+...
