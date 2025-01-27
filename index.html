@@ -110,63 +110,69 @@
 
         document.addEventListener("DOMContentLoaded", function() {
 
-            document.getElementById("orderForm").addEventListener("submit", function(event) {
+    document.getElementById("orderForm").addEventListener("submit", function(event) {
 
-                event.preventDefault();
-
-
-                let orderNummer = `A${currentOrderNumber}`;
-
-                let productType = document.getElementById("productType").value;
-
-                let kartonDikte = document.getElementById("kartonDikte").value;
-
-                let aantalDozen = document.getElementById("aantalDozen").value;
-
-                let lengte = document.getElementById("lengte").value;
-
-                let breedte = document.getElementById("breedte").value;
-
-                let hoogte = document.getElementById("hoogte").value;
-
-                let aantalDagen = document.getElementById("aantalDagen").value;
+        event.preventDefault();
 
 
-                // Maak een nieuw order object aan
+        let orderNummer = `A${currentOrderNumber}`;
 
-                let orderList = document.getElementById("orderList");
+        let productType = document.getElementById("productType").value;
 
-                let listItem = document.createElement("li");
+        let kartonDikte = document.getElementById("kartonDikte").value;
 
-                listItem.textContent = `Ordernummer: ${orderNummer} | Type: ${productType} | Kartondikte: ${kartonDikte} mm | Aantal: ${aantalDozen} | Afmetingen: ${lengte}x${breedte}x${hoogte} mm | Levering in: ${aantalDagen} dagen`;
+        let aantalDozen = document.getElementById("aantalDozen").value;
 
-                orderList.appendChild(listItem);
+        let lengte = document.getElementById("lengte").value;
 
+        let breedte = document.getElementById("breedte").value;
 
-                // Verhoog het ordernummer voor de volgende bestelling
+        let hoogte = document.getElementById("hoogte").value;
 
-                currentOrderNumber++;
-
-                document.getElementById("orderForm").reset();
-
-                document.getElementById("orderNummer").value = `A${currentOrderNumber}`; // Update het ordernummer
-
-            });
+        let aantalDagen = document.getElementById("aantalDagen").value;
 
 
-            // Reset button functionality
+        // Calculate the total area in square meters
 
-            document.getElementById("resetButton").addEventListener("click", function() {
+        let totalArea = ((lengte * breedte) * 2 + (lengte * hoogte) * 2 + (breedte * hoogte) * 2) / 1000000;
 
-                document.getElementById("orderList").innerHTML = ""; // Clear the order list
 
-                currentOrderNumber = 1; // Reset the order number
+        // Create a new order object
 
-                document.getElementById("orderNummer").value = `A${currentOrderNumber}`; // Reset the order number display
+        let orderList = document.getElementById("orderList");
 
-            });
+        let listItem = document.createElement("li");
 
-        });
+
+        listItem.textContent = `Ordernummer: ${orderNummer} | Type: ${productType} | Kartondikte: ${kartonDikte} mm | Aantal: ${aantalDozen} | Afmetingen: ${lengte}x${breedte}x${hoogte} mm | Levering in: ${aantalDagen} dagen | Totale oppervlakte: ${totalArea.toFixed(2)} m²`;
+
+        orderList.appendChild(listItem);
+
+
+        // Increase the order number for the next order
+
+        currentOrderNumber++;
+
+        document.getElementById("orderForm").reset();
+
+        document.getElementById("orderNummer").value = `A${currentOrderNumber}`; // Update the order number
+
+    });
+
+
+    // Reset button functionality
+
+    document.getElementById("resetButton").addEventListener("click", function() {
+
+        document.getElementById("orderList").innerHTML = ""; // Clear the order list
+
+        currentOrderNumber = 1; // Reset the order number
+
+        document.getElementById("orderNummer").value = `A${currentOrderNumber}`; // Reset the order number display
+
+    });
+
+});
 
     </script>
 
