@@ -93,6 +93,8 @@
 
         <button type="submit">Bestelling plaatsen</button>
 
+        <button type="button" id="resetButton">Reset Bestellingen</button> <!-- Reset button -->
+
     </form>
 
 
@@ -138,26 +140,6 @@
 
                 listItem.textContent = `Ordernummer: ${orderNummer} | Type: ${productType} | Kartondikte: ${kartonDikte} mm | Aantal: ${aantalDozen} | Afmetingen: ${lengte}x${breedte}x${hoogte} cm | Levering in: ${aantalDagen} dagen`;
 
-
-                // Maak een delete button
-
-                let deleteButton = document.createElement("button");
-
-                deleteButton.textContent = "Verwijder";
-
-                deleteButton.style.marginLeft = "10px"; // Voeg wat ruimte toe
-
-                deleteButton.addEventListener("click", function() {
-
-                    orderList.removeChild(listItem); // Verwijder het item uit de lijst
-
-                });
-
-
-                // Voeg de delete button toe aan de list item
-
-                listItem.appendChild(deleteButton);
-
                 orderList.appendChild(listItem);
 
 
@@ -168,6 +150,19 @@
                 document.getElementById("orderForm").reset();
 
                 document.getElementById("orderNummer").value = `A${currentOrderNumber}`; // Update het ordernummer
+
+            });
+
+
+            // Reset button functionality
+
+            document.getElementById("resetButton").addEventListener("click", function() {
+
+                document.getElementById("orderList").innerHTML = ""; // Clear the order list
+
+                currentOrderNumber = 1; // Reset the order number
+
+                document.getElementById("orderNummer").value = `A${currentOrderNumber}`; // Reset the order number display
 
             });
 
