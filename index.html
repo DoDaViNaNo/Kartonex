@@ -17,11 +17,7 @@
     <h1>Bestelformulier</h1>
 
 
-    <!-- Formulier voor het plaatsen van de bestelling -->
-
     <form id="orderForm">
-
-        <!-- Ordernummer wordt automatisch toegewezen -->
 
         <label for="orderNummer">Ordernummer:</label>
 
@@ -29,8 +25,6 @@
 
         <br><br>
 
-
-        <!-- Keuze voor Doos of Wikkel -->
 
         <label for="productType">Type product:</label>
 
@@ -44,8 +38,6 @@
 
         <br><br>
 
-
-        <!-- Karton dikte keuze -->
 
         <label for="kartonDikte">Karton dikte:</label>
 
@@ -64,16 +56,12 @@
         <br><br>
 
 
-        <!-- Aantal dozen -->
-
         <label for="aantalDozen">Aantal dozen/wikkels:</label>
 
         <input type="number" id="aantalDozen" name="aantalDozen" min="1" required>
 
         <br><br>
 
-
-        <!-- Afmetingen van de doos of wikkel -->
 
         <label for="lengte">Lengte (in cm):</label>
 
@@ -96,16 +84,12 @@
         <br><br>
 
 
-        <!-- Aantal dagen tot levering -->
-
         <label for="aantalDagen">Aantal dagen tot levering:</label>
 
         <input type="number" id="aantalDagen" name="aantalDagen" min="1" required>
 
         <br><br>
 
-
-        <!-- Bestelling plaatsen -->
 
         <button type="submit">Bestelling plaatsen</button>
 
@@ -114,32 +98,20 @@
 
     <h2>Bestellingen:</h2>
 
-    <ul id="orderList">
-
-        <!-- Hier worden de bestellingen weergegeven -->
-
-    </ul>
+    <ul id="orderList"></ul>
 
 
     <script>
 
-        // Start met ordernummer A1
-
         let currentOrderNumber = 1;
 
 
-        // Wacht totdat de DOM volledig geladen is
-
         document.addEventListener("DOMContentLoaded", function() {
-
-            // Voeg een submit event listener toe aan het formulier
 
             document.getElementById("orderForm").addEventListener("submit", function(event) {
 
-                event.preventDefault(); // Voorkomt dat het formulier opnieuw laadt
+                event.preventDefault();
 
-
-                // Haal de waarden op uit de velden
 
                 let orderNummer = `A${currentOrderNumber}`;
 
@@ -160,38 +132,31 @@
 
                 // Maak een nieuw order object aan
 
-                let order = {
-
-                    orderNummer: orderNummer,
-
-                    productType: productType,
-
-                    kartonDikte: kartonDikte,
-
-                    aantalDozen: aantalDozen,
-
-                    afmetingen: {
-
-                        lengte: lengte,
-
-                        breedte: breedte,
-
-                        hoogte: hoogte
-
-                    },
-
-                    leveringDate: aantalDagen // Het aantal dagen tot levering wordt opgeslagen
-
-                };
-
-
-                // Voeg het ordernummer toe aan de lijst van bestellingen
-
                 let orderList = document.getElementById("orderList");
 
                 let listItem = document.createElement("li");
 
                 listItem.textContent = `Ordernummer: ${orderNummer} | Type: ${productType} | Kartondikte: ${kartonDikte} mm | Aantal: ${aantalDozen} | Afmetingen: ${lengte}x${breedte}x${hoogte} cm | Levering in: ${aantalDagen} dagen`;
+
+
+                // Maak een delete button
+
+                let deleteButton = document.createElement("button");
+
+                deleteButton.textContent = "Verwijder";
+
+                deleteButton.style.marginLeft = "10px"; // Voeg wat ruimte toe
+
+                deleteButton.addEventListener("click", function() {
+
+                    orderList.removeChild(listItem); // Verwijder het item uit de lijst
+
+                });
+
+
+                // Voeg de delete button toe aan de list item
+
+                listItem.appendChild(deleteButton);
 
                 orderList.appendChild(listItem);
 
@@ -199,9 +164,6 @@
                 // Verhoog het ordernummer voor de volgende bestelling
 
                 currentOrderNumber++;
-
-
-                // Reset het formulier
 
                 document.getElementById("orderForm").reset();
 
